@@ -29,9 +29,15 @@ def generate_bot_responses(message, session):
 
 
 def record_current_answer(answer, current_question_id, session):
-    '''
-    Validates and stores the answer for the current question to django session.
-    '''
+    if not isinstance(answer,str):
+        return False,"answer must be string"
+    if current_question_id is None:
+        return False,"current question ID is not set"
+    if current_question_id>=len(PYTHON_QUESTION_LIST) or current_question_id <0:
+        return False,"invalid question ID"
+    if "answer" not in session:
+        session["answers"]={}
+     session["answer"][current_question_id]=answer
     return True, ""
 
 
